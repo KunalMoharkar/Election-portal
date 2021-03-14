@@ -1,14 +1,19 @@
- language: python 
+language: python 
 
-    python: 
+python: 
 
-      - "3.7"
+  - "3.7"
 
-    services:
+services:
 
-      - mysql
+  - mysql
 
-    install: 
+install: 
 
-      - pip install -r requirements.txt
-      
+  - pip install -r requirements.txt
+before_script: 
+
+  - mysql -e 'create database test;' -u root
+script: 
+
+  - python Electionportal/manage.py test
