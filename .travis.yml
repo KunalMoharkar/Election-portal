@@ -18,4 +18,5 @@
     before_script: 
 
       - mysql -e 'create database test;' -u root
-    script: 
+
+      
