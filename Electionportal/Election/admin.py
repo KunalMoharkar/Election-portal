@@ -7,3 +7,4 @@ admin.site.register(Timestamp)
 admin.site.register(Election)
 admin.site.register(Votescasted)
 admin.site.register(Votesreceived)
+
