@@ -27,12 +27,13 @@ class Student(models.Model):
     department = models.ForeignKey(Department,on_delete = models.CASCADE, related_name="Dept_Students")
     year = models.ForeignKey(Year,on_delete = models.CASCADE, related_name="Students")
     roles = models.ManyToManyField(Role,related_name="Members")
+    contact = models.CharField(max_length=20)
 
 class Voter(models.Model):
     student = models.OneToOneField(Student,on_delete = models.CASCADE)
 
 class Profile(models.Model):
-    image = models.ImageField(upload_to='images/')
+    image = models.FileField(upload_to='images/')
     linkedin_url = models.URLField(max_length = 200)
 
 class Candidate(models.Model):
