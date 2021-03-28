@@ -44,10 +44,22 @@ def check_validity(voter_id, election_id):
 #both for application as well as voting 
 def get_elections(request):
 
-    #filter on user dept
+    user_id = 1
+    elections = Election.objects.filter(allowed_depts__code = 'CSE', allowed_years__name = 'third')
+    
+    #election_list = []
 
-    #filter on user year
-    return HttpResponse("<h1>Get election view</h1>")
+    #filter only valid elections
+    #for election in elections:
+
+    #    if check_validity(user_id,election.id) == True:
+    #        election_list.append({'id':election.id,'title':election.title})
+
+    context = {'elections':elections}
+
+    print(elections)
+
+    return render(request,'Election/all-elections.html',context)
 
 #this view increments the vote of a candidate for a 
 #particular election
@@ -78,14 +90,6 @@ def vote_election(request,election_id,candidate_id):
     else:
         context = {'message':"Forbidden - already voted", 'code':403}
         return render(request, 'error.html',context)
-
-
-
-
-
-    #insert voter into votescasted
-
-    return HttpResponse("<h1>vote election view</h1>")
 
 #returns votewise sorted list of candidates
 #for a particaluar election
