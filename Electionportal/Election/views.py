@@ -1,5 +1,6 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from . models import Votesreceived
 
 # Create your views here.
 
@@ -28,5 +29,10 @@ def vote_election(request,election_id,candidate_id):
 #returns votewise sorted list of candidates
 #for a particaluar election
 def election_results(request,election_id):
+    
+    results = Votesreceived.objects.filter(election_id = election_id)
 
-    return HttpResponse("<h1>election results view</h1>")
+    print(results)
+
+
+    return render(request,"Election/election-results.html")
