@@ -30,9 +30,7 @@ def vote_election(request,election_id,candidate_id):
 #for a particaluar election
 def election_results(request,election_id):
     
-    results = Votesreceived.objects.filter(election_id = election_id)
+    results = Votesreceived.objects.filter(election_id = election_id).order_by('-votes')
+    context = {'results':results}
 
-    print(results)
-
-
-    return render(request,"Election/election-results.html")
+    return render(request,"Election/election-results.html",context)

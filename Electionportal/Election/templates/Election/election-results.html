@@ -12,4 +12,11 @@
 
 {%block body%}
 
+
+{%for result in results%}
+
+<li>{{result.election.title}} ----  {{result.candidate.student.user.username}} ---- {{result.votes}}</li>
+
+{%endfor%}
+
 {%endblock%}
