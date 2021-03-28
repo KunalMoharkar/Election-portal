@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{%block title%}
+<title>Election Results</title>
+{%endblock%}
+
+
+{%block head%}
+
+{%endblock%} 
+
+{%block body%}
+
+
+{%for result in results%}
+
+<li>{{result.election.title}} ----  {{result.candidate.student.user.username}} ---- {{result.votes}}</li>
+
+{%endfor%}
+
+{%endblock%}
