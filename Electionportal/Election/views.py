@@ -68,14 +68,16 @@ def vote_election(request,election_id,candidate_id):
             votescasted = Votescasted(voter_id = 2, election_id = election_id)
             votescasted.save()
 
-            return render(request, 'success.html')
+            context = {'message':"Vote has been successfully recorded"}
+            return render(request, 'success.html',context)
 
         else:
-
-            return render(request,'error.html')
+            context = {'message':"Forbidden", 'code':403}
+            return render(request,'error.html',context)
         
     else:
-        return render(request, 'error.html')
+        context = {'message':"Forbidden - already voted", 'code':403}
+        return render(request, 'error.html',context)
 
 
 
