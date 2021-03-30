@@ -1,0 +1,18 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}
+Accounts page
+{% endblock %}
+
+{%block body%}
+
+<h1>WELCOME</h1>
+<h2>Elections</h2>
+<p>Some information</p>
+<ul>
+    {% for election in elections %}
+        <li>{{election}}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

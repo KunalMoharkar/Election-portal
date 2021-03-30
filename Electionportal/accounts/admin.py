@@ -1,3 +1,4 @@
+#username -suruchi pwd - django
 from django.contrib import admin
 from .models import Department, Year, Role, Student, Voter, Profile, Candidate 
 

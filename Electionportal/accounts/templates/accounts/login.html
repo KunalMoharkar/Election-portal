@@ -1,0 +1,25 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}
+Login page
+{% endblock %}
+
+{%block body%}
+<h1>Login</h1>
+{% if message %}
+    <div>
+        {{ message }}
+    </div>
+{% endif %}
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <div class="container">
+        
+        <input type="text" placeholder="Enter Username" name="username" required>
+    
+        <input type="password" placeholder="Enter Password" name="password" required>
+    
+        <input type="submit" value="Login">
+    </div>
+</form>
+{% endblock %}
