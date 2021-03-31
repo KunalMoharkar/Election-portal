@@ -104,3 +104,11 @@ def election_results(request,election_id):
     context = {'results':results}
 
     return render(request,"Election/election-results.html",context)
+
+@login_required
+def get_election_candidates(request,election_id):
+
+    candidates = Votesreceived.objects.filter(election_id = election_id)
+    context = {'candidates':candidates}
+    
+    return render(request,"Election/candidates-list.html",context)
