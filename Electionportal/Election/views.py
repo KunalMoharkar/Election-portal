@@ -2,6 +2,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from . models import Election, Votesreceived, Votescasted
 from accounts.models import Voter, Student
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -42,6 +43,8 @@ def check_validity(voter_id, election_id):
 
 #this view serves the available eletions for a student
 #both for application as well as voting 
+
+@login_required
 def get_elections(request):
 
     student = Student.objects.get(user = request.user)
@@ -56,6 +59,8 @@ def get_elections(request):
 
 #this view increments the vote of a candidate for a 
 #particular election
+
+@login_required
 def vote_election(request,election_id,candidate_id):
 
     #check first that the candidate has not already voted
@@ -91,6 +96,8 @@ def vote_election(request,election_id,candidate_id):
 
 #returns votewise sorted list of candidates
 #for a particaluar election
+
+@login_required
 def election_results(request,election_id):
     
     results = Votesreceived.objects.filter(election_id = election_id).order_by('-votes')
