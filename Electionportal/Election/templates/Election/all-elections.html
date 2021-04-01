@@ -15,7 +15,7 @@
 {%for election in elections%}
 
 
-<li>{{election.title}} -- <a href="/election/candidates/{{election.id}}">view candidates</a> --- <a href="/election/results/{{election.id}}">Results</a></li>
+<li>{{election.title}} -- <a href="/election/candidates/{{election.id}}">view candidates</a> --- <a href="{% url 'applyforElections' %}">Apply</a> --- <a href="/election/results/{{election.id}}">Results</a></li>
 
 {%endfor%}
 

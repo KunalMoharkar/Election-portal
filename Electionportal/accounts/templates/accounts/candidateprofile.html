@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Candidate Profile
+{% endblock %}
+
+{%block body%}
+
+<ul>
+    <li>{{student}}</li>
+
+    <li>{{candidate}}</li>
+</ul>
+<br>
+<br>
+
+<ul>
+    <li>Currently logged in as: {{user.username}}</li>
+    <br>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+</ul>
+
+{% endblock %}
