@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{%block title%}
+<title>All Candidates</title>
+{%endblock%}
+
+
+{%block head%}
+
+{%endblock%} 
+
+{%block body%}
+
+{%for c in candidates%}
+
+
+<li>{{c.candidate.student.user.first_name}} -- {{c.candidate.student.user.username}} -- <a href="/election/vote/{{c.election.id}}/{{c.candidate.id}}">vote</a></li>
+
+{%endfor%}
+
+{%endblock%}

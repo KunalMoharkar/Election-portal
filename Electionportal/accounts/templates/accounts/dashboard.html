@@ -1,4 +1,4 @@
-{% extends "accounts/base.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 User Dashboard
@@ -9,6 +9,12 @@ User Dashboard
 <h1>WELCOME</h1>
 <h2>{{user.first_name}}</h2>
 <p>Some information</p>
+
+
+<a href="{% url 'get_elections' %}">All elections</a>
+
+
+<!--
 <ul>
     {% for election in elections %}
         <li>{{election}}</li>
@@ -16,9 +22,11 @@ User Dashboard
 </ul>
 <br>
 <br>
+
 <ul>
     <li>Currently logged in as: {{user.username}}</li>
     <br>
     <li><a href="{% url 'logout' %}">Logout</a></li>
 </ul>
+-->
 {% endblock %}
