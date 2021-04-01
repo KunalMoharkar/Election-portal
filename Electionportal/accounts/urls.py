@@ -7,8 +7,8 @@ from .views import *
 from . import views
 
 urlpatterns = [
-    #path('',views.index, name='index'),
-    path('login',views.index, name='login'),
+    path('',views.index, name='index'),
+    path('login',views.login_view, name='login'),
     path('logout',views.logout_view, name='logout'),
     path('applyelection',views.apply_for_election, name='applyforElections'),
     path('profile_image_upload', views.profile_image_view, name = 'profile_image_upload'),
