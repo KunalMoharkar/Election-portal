@@ -49,11 +49,11 @@ def profile_image_view(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
   
-        #user_id = request.user.id
+        user_id = request.user.id
         if form.is_valid():
             
             currobject = form.save()
-            '''student = Student.objects.get(user__id = user_id)
+            student = Student.objects.get(user__id = user_id)
             student.roles.add(2)
             student.save()
             candidate = Candidate()
@@ -61,7 +61,7 @@ def profile_image_view(request):
             candidate.student = Student.objects.get(user__id = user_id)
             candidate.save()
             candidate = Candidate.objects.get(student__user__id = user_id)
-            id = candidate.id'''
+            #id = candidate.id
             return redirect('new_candidate_profile',profile_id = currobject.id)
     else:
         form = ProfileForm()
