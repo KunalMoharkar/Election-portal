@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 
 {% block title %}
-Candidate Profile
+New Candidate Profile
 {% endblock %}
 
 {%block body%}
 
-<h2>Your Profile</h2>
+<h2>Your newly created Profile</h2>
 <ul>
-    <li>{{student}}</li>
+    <li>{{profile}}</li>
 
-    <li>{{candidate}}</li>
 </ul>
 <br>
 <br>
 
 <ul>
     <li>Currently logged in as: {{user.username}}</li>
+    <br>
+    <li><a href="#">Apply for election</a></li>
     <br>
     <li><a href="{% url 'logout' %}">Logout</a></li>
 </ul>

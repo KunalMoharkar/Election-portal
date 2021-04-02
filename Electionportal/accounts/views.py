@@ -41,6 +41,7 @@ def apply_for_election(request):
     if candidate is None:
         return redirect('profile_image_upload')
     else:
+        #redirect already ready profile to a new page for applying(not made yet)
         return redirect('candidate_profile',candidate_id = candidate.id)
 
 def profile_image_view(request):
@@ -48,11 +49,11 @@ def profile_image_view(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
   
-        user_id = request.user.id
+        #user_id = request.user.id
         if form.is_valid():
             
             currobject = form.save()
-            student = Student.objects.get(user__id = user_id)
+            '''student = Student.objects.get(user__id = user_id)
             student.roles.add(2)
             student.save()
             candidate = Candidate()
@@ -60,11 +61,11 @@ def profile_image_view(request):
             candidate.student = Student.objects.get(user__id = user_id)
             candidate.save()
             candidate = Candidate.objects.get(student__user__id = user_id)
-            id = candidate.id
-            return redirect('candidate_profile',candidate_id = id)
+            id = candidate.id'''
+            return redirect('new_candidate_profile',profile_id = currobject.id)
     else:
         form = ProfileForm()
-    return render(request, 'accounts/createprofile.html', {'form' : form})
+        return render(request, 'accounts/createprofile.html', {'form' : form})
 
 def get_candidate_profile(request,candidate_id):
     candidate = Candidate.objects.get(id = candidate_id)
@@ -74,3 +75,10 @@ def get_candidate_profile(request,candidate_id):
             'profile' : candidate.profile
         }
     return render(request,"accounts/candidateprofile.html",context)
+
+def get_new_profile(request, profile_id):
+    profile = Profile.objects.get(id = profile_id)
+    context = {
+        'profile' : profile
+    }
+    return render(request, "accounts/newcandidateprofile.html", context)
