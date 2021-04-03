@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{%block title%}
+My Applications
+{%endblock%}
+
+
+{%block head%}
+
+{%endblock%} 
+
+{%block body%}
+
+{%if applications%}
+
+    {%for application in applications%}
+
+    <li>{{application.election.title}} ---- {{application.status.name}}</li>
+
+    {%endfor%}
+
+{%else%}
+    <p>No applications yet</p>
+{%endif%}
+
+{%endblock%}

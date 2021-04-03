@@ -44,3 +44,22 @@ def apply(request,election_id):
 
             context = {'message':"Forbidden", 'code':403}
             return render(request, 'error.html',context)
+
+
+@login_required
+def my_applications(request):
+
+    user_id = request.user.id
+    if Candidate.objects.filter(student__user__id = user_id):
+        candidate = Candidate.objects.get(student__user__id = user_id)
+
+        applications = Application.objects.filter(candidate = candidate)
+
+        context = {'applications':applications}
+
+        return render(request,"application/myapplications.html",context)
+
+
+    else:
+        context = {'message':"Forbidden", 'code':403}
+        return render(request, 'error.html',context)
