@@ -8,6 +8,14 @@ ep-venv/
 node_modules/
 dist/
 
+
+Electionportal/images
+Electionportal/db.sqlite3
+
+Electionportal/accounts/migrations
+Electionportal/Election/migrations
+Electionportal/application/migrations
+
 # Compiled Java class files
 *.class
 
