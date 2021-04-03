@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{%block title%}
+Apply 
+{%endblock%}
+
+
+{%block head%}
+
+{%endblock%} 
+
+{%block body%}
+
+
+<h2>Election : {{election.title}}</h2>
+
+<form action="" method="POST">
+
+    {% csrf_token %}
+    <label for="msg">Campaign message:</label><br>
+    <textarea id="msg" name="msg" rows="4" cols="50">
+      Put your message here ... 
+    </textarea>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+
+{%endblock%}
