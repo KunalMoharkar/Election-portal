@@ -15,5 +15,12 @@ before_script:
 
   - mysql -e 'create database test;' -u root
 script: 
-
-  - python Electionportal/manage.py test
+  - python Electionportal/manage.py makemigrations accounts
+  - python Electionportal/manage.py makemigrations Election
+  - python Electionportal/manage.py makemigrations application
+  - python Electionportal/manage.py migrate accounts
+  - python Electionportal/manage.py migrate Election
+  - python Electionportal/manage.py migrate application
+  
+  
+  - python Electionportal/manage.py test application
