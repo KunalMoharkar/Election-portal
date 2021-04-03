@@ -1,19 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from .forms import *
 
 from Election.models import Election
+from .models import Student, Candidate
 
 # Create your views here.
 def index(request):
     if not request.user.is_authenticated:
         return render(request,"accounts/login.html",{"message":None})
-    context = {
-        "user": request.user ,
-        "elections": Election.objects.all()
-    }
-    return render(request,"accounts/dashboard.html",context)
+    
+    return render(request,"accounts/dashboard.html")
 
 def login_view(request):
     username = request.POST.get("username")
@@ -28,3 +27,58 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return render(request,"accounts/login.html",{"message":"Logged out successfully"})
+
+def apply_for_election(request):
+    user_id = request.user.id
+
+    try:
+        candidate = Candidate.objects.get(student__user__id = user_id)
+    except Candidate.DoesNotExist :
+        candidate = None
+    except Candidate.MultipleObjectsReturned:           #will handle this case later
+        candidate = None
+
+    if candidate is None:
+        return redirect('profile_image_upload')
+    else:
+        #redirect already ready profile to a new page for applying(not made yet)
+        return redirect('candidate_profile',candidate_id = candidate.id)
+
+def profile_image_view(request):
+  
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+  
+        user_id = request.user.id
+        if form.is_valid():
+            
+            currobject = form.save()
+            student = Student.objects.get(user__id = user_id)
+            student.roles.add(2)
+            student.save()
+            candidate = Candidate()
+            candidate.profile = currobject
+            candidate.student = Student.objects.get(user__id = user_id)
+            candidate.save()
+            candidate = Candidate.objects.get(student__user__id = user_id)
+            #id = candidate.id
+            return redirect('new_candidate_profile',profile_id = currobject.id)
+    else:
+        form = ProfileForm()
+        return render(request, 'accounts/createprofile.html', {'form' : form})
+
+def get_candidate_profile(request,candidate_id):
+    candidate = Candidate.objects.get(id = candidate_id)
+    context = {
+            'candidate' : candidate ,
+            'student' : candidate.student ,
+            'profile' : candidate.profile
+        }
+    return render(request,"accounts/candidateprofile.html",context)
+
+def get_new_profile(request, profile_id):
+    profile = Profile.objects.get(id = profile_id)
+    context = {
+        'profile' : profile
+    }
+    return render(request, "accounts/newcandidateprofile.html", context)
