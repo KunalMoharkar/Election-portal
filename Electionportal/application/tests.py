@@ -39,16 +39,22 @@ class ApplicationTestCase(TestCase):
         status_approved = Status.objects.create(name='approved') 
 
 
-    def test_insertion(self):
-        self.assertEqual(Student.objects.count(), 1)
-
     def test_apply_view(self):
 
         self.client.login(username='testuser', password='testpassword')
-        
-        message = 'my election test message'
 
+        message = 'my election test message'
         election = Election.objects.get(id = 1)
+
+        #get request
+        response = self.client.get(f'/application/apply/{election.id}')
+
+        self.assertEqual(response.status_code,200)
+
+        #same elction returned
+        self.assertEqual(response.context['election'].id,election.id)
+
+        #post request
         response = self.client.post(f'/application/apply/{election.id}',
                                         {'msg':message})
 
