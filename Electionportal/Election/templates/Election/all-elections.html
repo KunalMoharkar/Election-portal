@@ -7,16 +7,48 @@ All Elections
 
 
 {%block head%}
+<link rel="stylesheet" href="{% static 'Election/css/all-elections.css' %}" />
 
 {%endblock%} 
 
 {%block body%}
 
+<div class="container">
+
 {%for election in elections%}
 
+<div class="election-card">
+    <div class="body">
+        <h3>{{election.title}}</h3> 
+        <span>Departments:</span>
+        <div class="tags">
+            <span>
+                
+                CSE
+            </span>
+        </div>
+        <span>Years:</span>
+        <div class="tags">
+            <span>
+                pre-final
+            </span>
+        </div>
+        <span>Application window: Jan 19, 6pm - Jan 21, 8pm</span>
+        <span>Voting window: Jan 19, 6pm - Jan 21, 8pm</span>
+
+    </div>
+
+    <div class="footer">
+        <a href="#"><button>Candidates</button></a>
+        <a href="#"><button>Apply</button></a>
+        <a href="#"><button>Results</button></a>
+    </div>
+</div>
 
 <li>{{election.title}} -- <a href="/election/candidates/{{election.id}}">view candidates</a> --- <a href="{% url 'applyforElections' %}">Apply</a> --- <a href="/election/results/{{election.id}}">Results</a></li>
 
 {%endfor%}
+
+</div>
 
 {%endblock%}

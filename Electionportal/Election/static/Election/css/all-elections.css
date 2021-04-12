@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.election-card {
+  display: flex;
+  width: 300px;
+  height: auto;
+  padding: 20px;
+  margin: 10px;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: red;
+  border-radius: 5px;
+  transition-duration: 500ms;
+}
+
+.election-card:hover {
+  transform: scale(1.01);
+  box-shadow: 3px 3px 20px black;
+}
+
+.election-card .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  padding-top: 20px;
+}
+.election-card .body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.tags span {
+  display: block;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: blue;
+}
+
+/*# sourceMappingURL=all-elections.css.map */
