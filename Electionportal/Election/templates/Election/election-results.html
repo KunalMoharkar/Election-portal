@@ -7,16 +7,36 @@ Election Results
 
 
 {%block head%}
-
+<link rel="stylesheet" href="{% static 'Election/css/election-results.css' %}" />
 {%endblock%} 
 
 {%block body%}
 
+<div class="container">
+
 
 {%for result in results%}
 
-<li>{{result.election.title}} ----  {{result.candidate.student.user.username}} ---- {{result.votes}}</li>
+<div class="results-card">
+    <div class="card-img">
+        <img src="{{result.candidate.profile.image.url}}" />
+    </div>
+    <div class="body">
+        <span>
+            <b>Name :</b>
+            {{result.candidate.student.user.first_name}}
+        </span>
+        <span>
+            <b>Votes:</b>
+            {{result.votes}}
+        </span>
+    </div>
+</div>
+
 
 {%endfor%}
+
+</div>
+
 
 {%endblock%}

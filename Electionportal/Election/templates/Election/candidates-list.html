@@ -7,16 +7,36 @@ All Candidates
 
 
 {%block head%}
-
+<link rel="stylesheet" href="{% static 'Election/css/candidates-list.css' %}" />
 {%endblock%} 
 
 {%block body%}
 
+<div class="container">
+
 {%for c in candidates%}
 
+<div class="candidates-card">
+    <div class="card-body">
+        <span>
+            <b>Name: {{c.candidate.student.user.first_name}}</b>
+        </span>
+        <span>
+            <b>Department:</b>
+        </span>
+        <span>
+            <b>Year:</b>
+        </span>
+    </div>
+    <div class="card-buttons">
+        <a href="#"><button>View Profile</button></a>
+        <a href="/election/vote/{{c.election.id}}/{{c.candidate.id}}"><button>Vote</button></a>
+    </div>
+</div>
 
-<li>{{c.candidate.student.user.first_name}} -- {{c.candidate.student.user.username}} -- <a href="/election/vote/{{c.election.id}}/{{c.candidate.id}}">vote</a></li>
 
 {%endfor%}
+
+</div>
 
 {%endblock%}
