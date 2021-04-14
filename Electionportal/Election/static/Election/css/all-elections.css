@@ -14,7 +14,7 @@
   margin: 10px;
   flex-direction: column;
   justify-content: space-between;
-  background-color: red;
+  background-color: #e84545;
   border-radius: 5px;
   transition-duration: 500ms;
 }
@@ -26,6 +26,7 @@
 
 .election-card .footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
@@ -53,7 +54,5 @@
   padding-right: 8px;
   border-radius: 6px;
   font-size: 16px;
-  background-color: blue;
-}
-
-/*# sourceMappingURL=all-elections.css.map */
+  background-color: #903749;
+}/*# sourceMappingURL=all-elections.css.map */

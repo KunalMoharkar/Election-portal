@@ -12,7 +12,7 @@
   padding: 10px;
   margin: 10px;
   width: 100%;
-  background-color: red;
+  background-color: #e84545;
   border-radius: 5px;
   transition-duration: 500ms;
 }
@@ -35,6 +35,4 @@
   align-items: center;
   justify-content: center;
   padding: 10px;
-}
-
-/*# sourceMappingURL=candidates-list.css.map */
+}/*# sourceMappingURL=candidates-list.css.map */
