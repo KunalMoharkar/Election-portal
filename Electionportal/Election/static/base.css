@@ -42,4 +42,9 @@ a:hover {
   padding: 20px;
   border-top: 100px solid #2b2e4a;
   background-color: #53354a;
+  color: whitesmoke;
+}
+
+nav {
+  background-color: #2b2e4a !important;
 }/*# sourceMappingURL=base.css.map */
