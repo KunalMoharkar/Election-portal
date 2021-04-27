@@ -9,7 +9,7 @@ node_modules/
 dist/
 
 
-Electionportal/images
+Electionportal/media
 Electionportal/db.sqlite3
 
 Electionportal/accounts/migrations
