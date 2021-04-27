@@ -7,24 +7,22 @@ Apply
 
 
 {%block head%}
+<link rel="stylesheet" href="{% static 'application/css/apply.css' %}" />
 
 {%endblock%} 
 
 {%block body%}
 
+<div class="container">
 
-<h2>Election : {{election.title}}</h2>
-
-<form action="" method="POST">
-
+<h3>{{election.title}}</h3>
+<form action="" method="POST" class="apply-form">
     {% csrf_token %}
-    <label for="msg">Campaign message:</label><br>
-    <textarea id="msg" name="msg" rows="4" cols="50">
-      Put your message here ... 
+    <textarea id="msg" name="msg" rows="8" cols="50">
+    Put your message here .
     </textarea>
-    <br><br>
-    <input type="submit" value="Submit">
+    <button class="button" type="submit" >Submit</button>
 </form>
 
-
+</div>
 {%endblock%}

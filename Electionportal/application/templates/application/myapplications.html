@@ -7,21 +7,27 @@ My Applications
 
 
 {%block head%}
-
+<link rel="stylesheet" href="{% static 'application/css/myapplications.css' %}" />
 {%endblock%} 
 
 {%block body%}
+
+<div class="container">
 
 {%if applications%}
 
     {%for application in applications%}
 
-    <li>{{application.election.title}} ---- {{application.status.name}}</li>
+    <div class="application-card">
+       <span><b>Election: </b>{{application.election.title}}</span> 
+       <span><b>Status: </b>{{application.status.name}}</span> 
+    </div>
 
     {%endfor%}
 
 {%else%}
     <p>No applications yet</p>
 {%endif%}
+</div>
 
 {%endblock%}
