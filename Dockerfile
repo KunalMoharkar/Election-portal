@@ -1,17 +1,13 @@
 # base image  
 FROM python:3.7   
-ENV PYTHONUNBUFFERED=1
 # setup environment variable  
-ENV DockerHOME=/home/app/webapp  
+ENV DockerHOME=/code
 # set work directory  
 RUN mkdir -p $DockerHOME  
 # where your code lives  
 WORKDIR $DockerHOME  
-# install dependencies  
-RUN pip install --upgrade pip  
+EXPOSE 8000
 # copy whole project to your docker home directory
 COPY . $DockerHOME  
-# run this command to install all dependencies  
-EXPOSE 8000
 
 RUN pip install -r requirements.txt  

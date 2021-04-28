@@ -1,20 +1,27 @@
-version: "3.9"
+version: "3"
    
 services:
+
   db:
-    image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
+    image: mysql:5.7
+    ports:
+      - '3307:3306'
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+       MYSQL_DATABASE: 'my-app-db'
+       MYSQL_USER: 'user'
+       MYSQL_PASSWORD: 'password'
+       MYSQL_ROOT_PASSWORD: 'password'
+
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      bash -c "python Electionportal/manage.py makemigrations
+      && python Electionportal/manage.py migrate
+      && python Electionportal/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+
