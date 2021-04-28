@@ -1,5 +1,6 @@
 # base image  
 FROM python:3.7   
+ENV PYTHONUNBUFFERED=1
 # setup environment variable  
 ENV DockerHOME=/home/app/webapp  
 # set work directory  
@@ -14,5 +15,3 @@ COPY . $DockerHOME
 EXPOSE 8000
 
 RUN pip install -r requirements.txt  
-# start server  
-CMD ["python", "Electionportal/manage.py", "runserver", "0.0.0.0:8000"]
