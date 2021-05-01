@@ -17,7 +17,9 @@ New Candidate Profile
 <ul>
     <li>Currently logged in as: {{user.username}}</li>
     <br>
-    <li><a href="#">Apply for election</a></li>
+    <li>Currently applying for election: {{election_id}}</li>
+    <br>
+    <li><a href="/application/apply/{{election_id}}">Apply for election</a></li>
     <br>
     <li><a href="{% url 'logout' %}">Logout</a></li>
 </ul>

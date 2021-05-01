@@ -35,7 +35,7 @@ class Voter(models.Model):
     student = models.OneToOneField(Student,on_delete = models.CASCADE)
 
 class Profile(models.Model):
-    image = models.FileField(upload_to='images/', default='avatar.jpeg')
+    image = models.ImageField(upload_to='images/', default='avatar.jpeg')
     linkedin_url = models.URLField(max_length = 200)
 
 class Candidate(models.Model):
