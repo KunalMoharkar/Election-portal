@@ -3,8 +3,35 @@ from django.shortcuts import render
 from . models import Election, Votesreceived, Votescasted
 from accounts.models import Voter, Student
 from django.contrib.auth.decorators import login_required
+from datetime import date, datetime
 
 # Create your views here.
+
+#helper function to determine if the election window is open for a student
+def check_timeline(election_id, check_id):          #check_id = 1 for apllication, 2 for voting
+
+    election = Election.objects.get(id = election_id)
+    currdate = datetime.now().date()
+    currtime = datetime.now().time()
+
+    if check_id == 1:
+        application_win = election.application_win
+        if (currdate >= application_win.start_date and currdate <= application_win.end_date):
+            if (currtime >= application_win.start_time and currtime <= application_win.end_time):
+                return True
+            else:
+                return False
+        else:
+            return False
+    elif check_id == 2:
+        voting_win = election.voting_win
+        if (currdate >= voting_win.start_date and currdate <= voting_win.end_date):
+            if (currtime >= voting_win.start_time and currtime <= voting_win.end_time):
+                return True
+            else:
+                return False
+        else:
+            return False
 
 #helper function to determine if a election is open for a student
 def check_validity(voter_id, election_id):
@@ -63,35 +90,41 @@ def get_elections(request):
 @login_required
 def vote_election(request,election_id,candidate_id):
 
-    #check first that the candidate has not already voted
+    #check if voting window is open
+    if check_timeline(election_id, 2):
 
-    user_id = request.user.id
+        #check first that the candidate has not already voted
 
-    voter = Voter.objects.get(student__user__id = user_id)
+        user_id = request.user.id
 
-    if not Votescasted.objects.filter(voter_id = voter.id, election_id = election_id):
-        
-        #now check that voter can vote in that election
-        if check_validity(voter.id,election_id) == True:
+        voter = Voter.objects.get(student__user__id = user_id)
 
-            #add vote
-            votesrec = Votesreceived.objects.get(election_id = election_id, candidate_id = candidate_id)
-            votesrec.votes = votesrec.votes + 1
-            votesrec.save()
+        if not Votescasted.objects.filter(voter_id = voter.id, election_id = election_id):
+            
+            #now check that voter can vote in that election
+            if check_validity(voter.id,election_id) == True:
 
-            #register that voter has voted
-            votescasted = Votescasted(voter_id = voter.id, election_id = election_id)
-            votescasted.save()
+                #add vote
+                votesrec = Votesreceived.objects.get(election_id = election_id, candidate_id = candidate_id)
+                votesrec.votes = votesrec.votes + 1
+                votesrec.save()
 
-            context = {'message':"Vote has been successfully recorded"}
-            return render(request, 'success.html',context)
+                #register that voter has voted
+                votescasted = Votescasted(voter_id = voter.id, election_id = election_id)
+                votescasted.save()
 
+                context = {'message':"Vote has been successfully recorded"}
+                return render(request, 'success.html',context)
+
+            else:
+                context = {'message':"Forbidden", 'code':403}
+                return render(request,'error.html',context)
+            
         else:
-            context = {'message':"Forbidden", 'code':403}
-            return render(request,'error.html',context)
-        
+            context = {'message':"Forbidden - already voted", 'code':403}
+            return render(request, 'error.html',context)
     else:
-        context = {'message':"Forbidden - already voted", 'code':403}
+        context = {'message':"Sorry Voting window has closed!"}
         return render(request, 'error.html',context)
 
 #returns votewise sorted list of candidates
@@ -112,3 +145,4 @@ def get_election_candidates(request,election_id):
     context = {'candidates':candidates}
     
     return render(request,"Election/candidates-list.html",context)
+

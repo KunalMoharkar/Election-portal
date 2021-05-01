@@ -4,9 +4,9 @@ from . models import Application, Status
 from Election.models import Election
 from accounts.models import Candidate, Voter
 from Election.views import check_validity
-
+from Election.views import check_timeline
+from datetime import date, datetime
 # Create your views here.
-
 
 @login_required
 def apply(request,election_id):
@@ -14,8 +14,13 @@ def apply(request,election_id):
     if request.method == "GET":
 
         election = Election.objects.get(id = election_id)  
+
         context = {'election':election}   
-        return render(request,"application/apply.html",context)
+        if check_timeline(election_id, 1):
+            return render(request,"application/apply.html",context)
+        else:
+            context = {'message':"Sorry Application window has closed!"}
+            return render(request, 'error.html',context)
 
     else:
         #check that candidate exists
@@ -63,3 +68,4 @@ def my_applications(request):
     else:
         context = {'message':"Forbidden", 'code':403}
         return render(request, 'error.html',context)
+
