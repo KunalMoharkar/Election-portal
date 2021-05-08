@@ -8,7 +8,7 @@ from datetime import date, datetime
 # Create your views here.
 
 #helper function to determine if the election window is open for a student
-def check_timeline(election_id, check_id):          #check_id = 1 for apllication, 2 for voting
+def check_timeline(election_id, check_id):          #check_id = 1 for apllication, 2 for voting, 3 for showing results
 
     election = Election.objects.get(id = election_id)
     currdate = datetime.now().date()
@@ -16,22 +16,43 @@ def check_timeline(election_id, check_id):          #check_id = 1 for apllicatio
 
     if check_id == 1:
         application_win = election.application_win
-        if (currdate >= application_win.start_date and currdate <= application_win.end_date):
-            if (currtime >= application_win.start_time and currtime <= application_win.end_time):
+        if(currdate == application_win.start_date) :
+            if (currtime>= application_win.start_time) :
                 return True
             else:
                 return False
-        else:
+        elif (currdate > application_win.start_date and currdate < application_win.end_date):
+            return True
+        elif (currdate == application_win.end_date):
+            if (currtime <= application_win.end_time):
+                return True
+            else:
+                return False
+        else :
             return False
+        
     elif check_id == 2:
         voting_win = election.voting_win
-        if (currdate >= voting_win.start_date and currdate <= voting_win.end_date):
-            if (currtime >= voting_win.start_time and currtime <= voting_win.end_time):
+        if(currdate == voting_win.start_date) :
+            if (currtime>= voting_win.start_time) :
                 return True
             else:
                 return False
-        else:
+        elif (currdate > voting_win.start_date and currdate < voting_win.end_date):
+            return True
+        elif (currdate == voting_win.end_date):
+            if (currtime <= voting_win.end_time):
+                return True
+            else:
+                return False
+        else :
             return False
+    elif check_id == 3:
+        #if voting window ha closed show results
+        voting_win = election.voting_win
+        if(currdate >= voting_win.end_date) :
+            if (currtime > voting_win.end_time) :
+                return True
 
 #helper function to determine if a election is open for a student
 def check_validity(voter_id, election_id):
@@ -133,10 +154,15 @@ def vote_election(request,election_id,candidate_id):
 @login_required
 def election_results(request,election_id):
     
-    results = Votesreceived.objects.filter(election_id = election_id).order_by('-votes')
-    context = {'results':results}
+    if check_timeline(election_id, 3):
+        results = Votesreceived.objects.filter(election_id = election_id).order_by('-votes')
+        context = {'results':results}
+        
+        return render(request,"Election/election-results.html",context)
+    else :
+        context = {'message':"Sorry Voting is still going on so results will be shown when voting window closes!"}
+        return render(request, 'error.html',context)
 
-    return render(request,"Election/election-results.html",context)
 
 @login_required
 def get_election_candidates(request,election_id):

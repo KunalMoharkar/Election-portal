@@ -1,5 +1,5 @@
 from django.db import models
-from Election.models import Election
+from Election.models import Election, Votesreceived
 import datetime
 from accounts.models import Candidate
 from django.conf import settings
@@ -32,4 +32,8 @@ class Application(models.Model):
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [self.candidate.student.user.email, ]
         send_mail( subject, message, email_from, recipient_list )
+        
+        if self.status.name == "accepted":
+            newCandidate = Votesreceived(election = self.election, candidate = self.candidate, votes = 0)
+            newCandidate.save()
         super(Application, self).save(*args, **kwargs)

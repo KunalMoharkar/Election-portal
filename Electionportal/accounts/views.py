@@ -12,7 +12,15 @@ def index(request):
     if not request.user.is_authenticated:
         return render(request,"accounts/login.html",{"message":None})
     
-    return render(request,"accounts/dashboard.html")
+    try:
+        candidate = Candidate.objects.get(student__user__id = request.user.id)
+    except Candidate.DoesNotExist :
+        candidate = None
+    context = {
+            "message": None ,
+            "candidate": candidate
+        }
+    return render(request,"accounts/dashboard.html", context)
 
 def login_view(request):
     username = request.POST.get("username")
@@ -21,6 +29,7 @@ def login_view(request):
     if user is not None:
         login(request,user)
         return HttpResponseRedirect(reverse("index"))
+        
     else:
         return render(request,"accounts/login.html",{"message":"Invalid Credentials!!"})
 
