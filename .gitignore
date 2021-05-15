@@ -1,6 +1,8 @@
 # These are some examples of commonly ignored file patterns.
 # You should customize this list as applicable to your project.
 
+.vscode
+
 #envs
 ep-venv/
 
@@ -15,6 +17,9 @@ Electionportal/db.sqlite3
 Electionportal/accounts/migrations
 Electionportal/Election/migrations
 Electionportal/application/migrations
+
+#env file
+Electionportal/Electionportal/.env
 
 # Compiled Java class files
 *.class
