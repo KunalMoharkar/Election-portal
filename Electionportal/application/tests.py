@@ -5,8 +5,8 @@ from .models import Application, Status
 from accounts.models import Student, Candidate, Role, Year, Department, Profile, Voter
 from Election.models import Election, Timestamp
 from django.contrib.auth.models import User
-import datetime
-from django.utils import timezone
+from datetime import date, datetime, time
+#from django.utils import timezone
 
 class ApplicationTestCase(TestCase):
 
@@ -22,11 +22,11 @@ class ApplicationTestCase(TestCase):
         candidate = Candidate.objects.create(student = student, profile = profile)
         voter = Voter.objects.create(student = student)
 
-        application_win = Timestamp.objects.create(election_name='test election 1',start_time =timezone.now(), end_time =timezone.now(),
-                                                    start_date=datetime.date.today(),end_date=datetime.date.today())
+        application_win = Timestamp.objects.create(election_name='test election 1',start_time = time(0,0,0), end_time = time(23,59,59),
+                                                    start_date=date.today(),end_date=date.today())
         
-        voting_win = Timestamp.objects.create(election_name='test election 1',start_time =timezone.now(), end_time =timezone.now(),
-                                                    start_date=datetime.date.today(),end_date=datetime.date.today())
+        voting_win = Timestamp.objects.create(election_name='test election 1',start_time = time(0,0,0), end_time = time(23,59,59),
+                                                    start_date=date.today(),end_date=date.today())
 
 
         election = Election.objects.create(title="test election 1",application_win=application_win, voting_win= voting_win)
@@ -67,7 +67,6 @@ class ApplicationTestCase(TestCase):
         self.assertEqual(response.context['message'],"Successfully Applied")
 
     def test_my_aplications_view(self):
-        
         
         
         self.client.login(username='testuser', password='testpassword')
