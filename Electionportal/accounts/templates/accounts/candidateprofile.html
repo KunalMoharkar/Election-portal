@@ -1,26 +1,31 @@
 {% extends "base.html" %}
+{% load static %} 
 
 {% block title %}
 Candidate Profile
 {% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'accounts/css/candidateprofile.css' %}" />
+
+{% endblock %}
+
 {%block body%}
+<h2 style="text-align:center">Your Profile</h2>
 
-<h2>Your Profile</h2>
-<ul>
-    <li>{{student}}</li>
-
-    <li>{{candidate}}</li>
-</ul>
-<br>
-<br>
-
-<ul>
-    <li>Currently logged in as: {{user.username}}</li>
-    <br>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-    <br>
-    <li><a href="#">Application status/Proceed for application</a></li>
-</ul>
+<div class="card">
+  <img src="{{candidate.profile.image.url}}" alt="{{candidate.student.user}}" style="width:100%">
+  <h2>{{candidate.student.user.first_name}}</h2>
+  <p class="title">{{candidate.student.department.name}}</p>
+  <p>{{candidate.student.user.email}}</p>
+  <div style="margin: 24px 0;">
+    <a href="#"><i class="fa fa-dribbble"></i></a> 
+    <a href="#"><i class="fa fa-twitter"></i></a>  
+    <a href="{{candidate.profile.linkedin_url}}"><i class="fa fa-linkedin"></i></a>  
+    <a href="#"><i class="fa fa-facebook"></i></a> 
+  </div>
+  <p><a href="/application/apply/{{election.id}}"><button>Proceed for applying</button></a></p>
+</div>
 
 {% endblock %}

@@ -1,0 +1,50 @@
+body, html {
+  padding: 0px;
+  margin: 0px;
+  background-color: whitesmoke;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  margin: 10px;
+  background-color: #e84545;
+  transition-duration: 500ms;
+}
+
+.button:hover {
+  outline: none;
+  border: none;
+  background-color: #53354a;
+}
+
+.base-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-top: 100px solid #2b2e4a;
+  background-color: #53354a;
+  color: whitesmoke;
+}
+
+nav {
+  background-color: #2b2e4a !important;
+}/*# sourceMappingURL=base.css.map */

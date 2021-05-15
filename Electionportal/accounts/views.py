@@ -12,7 +12,15 @@ def index(request):
     if not request.user.is_authenticated:
         return render(request,"accounts/login.html",{"message":None})
     
-    return render(request,"accounts/dashboard.html")
+    try:
+        candidate = Candidate.objects.get(student__user__id = request.user.id)
+    except Candidate.DoesNotExist :
+        candidate = None
+    context = {
+            "message": None ,
+            "candidate": candidate
+        }
+    return render(request,"accounts/dashboard.html", context)
 
 def login_view(request):
     username = request.POST.get("username")
@@ -21,6 +29,7 @@ def login_view(request):
     if user is not None:
         login(request,user)
         return HttpResponseRedirect(reverse("index"))
+        
     else:
         return render(request,"accounts/login.html",{"message":"Invalid Credentials!!"})
 
@@ -28,7 +37,7 @@ def logout_view(request):
     logout(request)
     return render(request,"accounts/login.html",{"message":"Logged out successfully"})
 
-def apply_for_election(request):
+def apply_for_election(request, election_id):
     user_id = request.user.id
 
     try:
@@ -39,12 +48,12 @@ def apply_for_election(request):
         candidate = None
 
     if candidate is None:
-        return redirect('profile_image_upload')
+        return redirect('profile_image_upload', election_id = election_id)
     else:
         #redirect already ready profile to a new page for applying(not made yet)
-        return redirect('candidate_profile',candidate_id = candidate.id)
+        return redirect('candidate_profile',candidate_id = candidate.id, election_id = election_id)
 
-def profile_image_view(request):
+def profile_image_view(request, election_id):
   
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
@@ -62,23 +71,31 @@ def profile_image_view(request):
             candidate.save()
             candidate = Candidate.objects.get(student__user__id = user_id)
             #id = candidate.id
-            return redirect('new_candidate_profile',profile_id = currobject.id)
+            return redirect('candidate_profile',candidate_id = candidate.id, election_id = election_id)
     else:
+        election = Election.objects.get(id = election_id)
         form = ProfileForm()
-        return render(request, 'accounts/createprofile.html', {'form' : form})
+        context = {
+            'form': form,
+            'election': election
+        }
+        return render(request, 'accounts/createprofile.html', context)
 
-def get_candidate_profile(request,candidate_id):
+def get_candidate_profile(request,candidate_id,election_id):
     candidate = Candidate.objects.get(id = candidate_id)
+    election = Election.objects.get(id = election_id)
     context = {
             'candidate' : candidate ,
             'student' : candidate.student ,
-            'profile' : candidate.profile
+            'profile' : candidate.profile,
+            'election': election
         }
     return render(request,"accounts/candidateprofile.html",context)
 
-def get_new_profile(request, profile_id):
+def get_new_profile(request, profile_id, election_id):
     profile = Profile.objects.get(id = profile_id)
     context = {
-        'profile' : profile
+        'profile' : profile,
+        'election_id' : election_id
     }
     return render(request, "accounts/newcandidateprofile.html", context)

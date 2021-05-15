@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.candidates-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
+  background-color: #ff8080;
+  border-radius: 5px;
+  transition-duration: 500ms;
+}
+
+.candidates-card:hover {
+  transform: scale(1.01);
+  box-shadow: 3px 3px 20px black;
+}
+
+.candidates-card .card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.candidates-card .card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}/*# sourceMappingURL=candidates-list.css.map */

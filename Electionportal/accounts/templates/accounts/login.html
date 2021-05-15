@@ -1,25 +1,40 @@
 {% extends "base.html" %}
+{% load static %} 
 
 {% block title %}
 Login page
 {% endblock %}
 
+{%block head%}
+<link rel="stylesheet" href="{% static 'accounts/css/candidateprofile.css' %}" />
+
+{%endblock%} 
+
 {%block body%}
-<h1>Login</h1>
-{% if message %}
-    <div>
-        {{ message }}
+    <br>
+    <div class="card">
+        <div class="body">
+            <h3>Login</h3> 
+            {% if message %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endif %}
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                    
+                    <input type="text" placeholder="Enter Username" name="username" required>
+                    <br><br>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+                    <br><br>
+                    <p><button type="submit" value="Login">Login</button></p>
+  
+            </form>
+            
+        </div>
+
     </div>
-{% endif %}
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <div class="container">
-        
-        <input type="text" placeholder="Enter Username" name="username" required>
     
-        <input type="password" placeholder="Enter Password" name="password" required>
-    
-        <input type="submit" value="Login">
-    </div>
-</form>
+   <br>
+
 {% endblock %}

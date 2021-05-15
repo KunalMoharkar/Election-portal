@@ -7,16 +7,49 @@ All Elections
 
 
 {%block head%}
+<link rel="stylesheet" href="{% static 'Election/css/all-elections.css' %}" />
 
 {%endblock%} 
 
 {%block body%}
 
+<div class="container">
+
 {%for election in elections%}
 
+<div class="election-card">
+    <div class="body">
+        <h3>{{election.title}}</h3> 
+        <span><b>Departments:</b></span>
+        <div class="tags">
+            {%for depts in election.allowed_depts.all%}
+            <span>    
+                {{depts.code}}
+            </span>
+            {%endfor%}
+        </div>
+        <span><b>Years:</b></span>
+        <div class="tags">
+            {%for year in election.allowed_years.all%}
+            <span>    
+                {{year.name}}
+            </span>
+            {%endfor%}
+        </div>
+        <span><b>Application window:</b> {{election.application_win.start_date}}, {{election.application_win.start_time}} - {{election.application_win.end_date}}, {{election.application_win.end_time}}</span>
+        <span><b>Voting window:</b> {{election.voting_win.start_date}}, {{election.voting_win.start_time}} - {{election.voting_win.end_date}}, {{election.voting_win.end_time}}</span>
 
-<li>{{election.title}} -- <a href="/election/candidates/{{election.id}}">view candidates</a> --- <a href="{% url 'applyforElections' %}">Apply</a> --- <a href="/election/results/{{election.id}}">Results</a></li>
+    </div>
+
+    <div class="footer">
+        <a href="/election/candidates/{{election.id}}"><button class="button">Candidates</button></a>
+        <a href="/accounts/applyforelection/{{election.id}}"><button class="button">Apply</button></a>
+        <a href="/election/results/{{election.id}}"><button class="button">Results</button></a>
+    </div>
+</div>
 
 {%endfor%}
+
+</div>
 
 {%endblock%}

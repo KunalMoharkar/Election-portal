@@ -4,9 +4,10 @@ from . models import Application, Status
 from Election.models import Election
 from accounts.models import Candidate, Voter
 from Election.views import check_validity
+from Election.views import check_timeline
+from datetime import date, datetime
 
 # Create your views here.
-
 
 @login_required
 def apply(request,election_id):
@@ -14,35 +15,46 @@ def apply(request,election_id):
     if request.method == "GET":
 
         election = Election.objects.get(id = election_id)  
-        context = {'election':election}   
-        return render(request,"application/apply.html",context)
+
+        context = {'election':election}  
+        #check if the window is open 
+        if check_timeline(election_id, 1):
+            return render(request,"application/apply.html",context)
+        else:
+            context = {'message':"Sorry Application window has closed!"}
+            return render(request, 'error.html',context)
 
     else:
-        #check that candidate exists
-        user_id = request.user.id
-        if Candidate.objects.filter(student__user__id = user_id):
+        #check if the window is open
+        if check_timeline(election_id, 1):
+            #check that candidate exists
+            user_id = request.user.id
+            if Candidate.objects.filter(student__user__id = user_id):
 
-            #now check he is allowed in this election
-            voter = Voter.objects.get(student__user__id = user_id)
+                #now check he is allowed in this election
+                voter = Voter.objects.get(student__user__id = user_id)
 
-            if check_validity(voter.id, election_id) == True:
-                
-                msg = request.POST.get('msg')
+                if check_validity(voter.id, election_id) == True:
+                    
+                    msg = request.POST.get('msg')
 
-                candidate = Candidate.objects.get(student__user__id = user_id)
-                status = Status.objects.get(name = 'in review')
-                application = Application(election_id = election_id, candidate = candidate, status = status, campaign_msg=msg)
-                application.save()
-                context = {'message':"Successfully Applied"}
-                return render(request, 'success.html',context)
+                    candidate = Candidate.objects.get(student__user__id = user_id)
+                    status = Status.objects.get(name = 'in review')
+                    application = Application(election_id = election_id, candidate = candidate, status = status, campaign_msg=msg)
+                    application.save()
+                    context = {'message':"Successfully Applied"}
+                    return render(request, 'success.html',context)
 
-            else:
+                else:
+                    context = {'message':"Forbidden", 'code':403}
+                    return render(request, 'error.html',context)
+
+            else :
+
                 context = {'message':"Forbidden", 'code':403}
                 return render(request, 'error.html',context)
-
-        else :
-
-            context = {'message':"Forbidden", 'code':403}
+        else:
+            context = {'message':"Sorry Application window has closed!"}
             return render(request, 'error.html',context)
 
 
@@ -63,3 +75,4 @@ def my_applications(request):
     else:
         context = {'message':"Forbidden", 'code':403}
         return render(request, 'error.html',context)
+

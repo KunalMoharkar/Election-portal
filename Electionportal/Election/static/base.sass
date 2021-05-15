@@ -1,0 +1,53 @@
+$buttonbg :  #e84545
+$buttonHoverBg : #53354a
+$bodyBg: whitesmoke
+
+
+$footer-border: #2b2e4a
+$footer-bg: #53354a
+$footer-text: whitesmoke
+body, html
+    padding: 0px
+    margin: 0px
+    background-color: $bodyBg
+    
+
+a
+    text-decoration: none
+
+a:hover
+    text-decoration: none
+
+.button 
+    display: flex
+    align-items: center
+    justify-content: center
+    padding-top: 5px
+    padding-bottom: 5px
+    padding-left: 10px
+    padding-right: 10px
+    border-radius: 5px
+    font-size: 16px
+    border: none
+    outline: none
+    margin: 10px
+    background-color: $buttonbg
+    transition-duration: 500ms
+
+.button:hover
+    outline: none
+    border: none
+    background-color: $buttonHoverBg
+
+
+.base-footer
+    display: flex
+    align-items: center
+    justify-content: center
+    padding: 20px
+    border-top: 100px solid $footer-border
+    background-color: $footer-bg
+    color: $footer-text
+
+nav
+    background-color: $footer-border !important
